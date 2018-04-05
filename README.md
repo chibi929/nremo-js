@@ -1,6 +1,8 @@
 # nremo-js
 
-Nature Remo API V1 Client.
+[![npm version](https://badge.fury.io/js/nremo-js.svg)](https://badge.fury.io/js/nremo-js)
+
+Nature Remo API V1 Client.  
 API details: https://developer.nature.global/
 
 # Task
