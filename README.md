@@ -5,7 +5,7 @@
 Nature Remo API V1 Client.  
 API details: https://developer.nature.global/
 
-# Task
+# TODO
 
 ## Manual Test
 
@@ -17,7 +17,7 @@ API details: https://developer.nature.global/
 - [ ] POST: /devices/{device}/temperature_offset
 - [ ] POST: /devices/{device}/humidity_offset
 - [ ] POST: /detectappliance
-- [ ] GET: /appliances
+- [x] GET: /appliances
 - [ ] POST: /appliances
 - [ ] POST: /appliance_orders
 - [ ] POST: /appliances/{appliance}/delete
@@ -28,4 +28,4 @@ API details: https://developer.nature.global/
 - [ ] POST: /appliances/{appliance}/signal_orders
 - [ ] POST: /signals/{signal}
 - [ ] POST: /signals/{signal}/delete
-- [ ] POST: /signals/{signal}/send
+- [x] POST: /signals/{signal}/send
