@@ -89,10 +89,7 @@ export class RemoClient implements IUsers, IDevices, IAppliances, ISignals {
 
   deleteRemo(device: string): Promise<void> {
     const api = `/devices/${device}/delete`;
-    const data = {
-      name: name
-    };
-    return this.httpClient.post(api, qs.stringify(data));
+    return this.httpClient.post(api);
   }
 
   updateTemperatureOffset(device: string, offset: number): Promise<void> {
