@@ -58,7 +58,7 @@ export interface AirCon {
   tempUnit: string;
 }
 
-export interface Signal{
+export interface Signal {
   id: string;
   name: string;
   image: string;
