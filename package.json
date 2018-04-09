@@ -4,7 +4,7 @@
   "description": "Nature Remo API V1 Client",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
-  "repository": "git@github.com:chibi929/remo-js.git",
+  "repository": "git@github.com:chibi929/nremo-js.git",
   "author": "chibi929",
   "license": "MIT",
   "keywords": [
