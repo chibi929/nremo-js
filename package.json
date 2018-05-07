@@ -28,6 +28,7 @@
     "build": "tsc",
     "clean": "rm -rf lib",
     "test": "mocha lib/*.spec.js",
-    "preversion": "npm run clean && npm run build && npm run test"
+    "preversion": "npm run clean && npm run build && npm run test",
+    "postversion": "git push origin --tags"
   }
 }
