@@ -13,38 +13,38 @@ import {
   Signal,
   User
 } from './models';
-import {AxiosWrapper} from './axios-wrapper';
+import { AxiosWrapper, AxiosPromise } from './axios-wrapper';
 
 export interface IUsers {
-  fetchMe(): Promise<User>;
-  updateMe(nickname: string): Promise<User>;
+  fetchMe(): AxiosPromise<User>;
+  updateMe(nickname: string): AxiosPromise<User>;
 }
 
 export interface IDevices {
-  fetchDevices(): Promise<Device[]>;
-  updateRemo(device: string, name: string): Promise<void>;
-  deleteRemo(device: string): Promise<void>;
-  updateTemperatureOffset(device: string, offset: number): Promise<void>;
-  updateHumidityOffset(device: string, offset: number): Promise<void>;
+  fetchDevices(): AxiosPromise<Device[]>;
+  updateRemo(device: string, name: string): AxiosPromise<void>;
+  deleteRemo(device: string): AxiosPromise<void>;
+  updateTemperatureOffset(device: string, offset: number): AxiosPromise<void>;
+  updateHumidityOffset(device: string, offset: number): AxiosPromise<void>;
 }
 
 export interface IAppliances {
-  findAirCon(message: InfraredSignal): Promise<ApplianceModelAndParam[]>;
-  updateAirConSettings(appliance: string, temperature?: string, operation_mode?: string, air_volume?: string, air_direction?: string, button?: string): Promise<void>;
-  fetchAppliances(): Promise<Appliance[]>;
-  createAppliance(device: string, nickname: string, image: string, model?: string): Promise<Appliance>;
-  reorderAppliances(appliances: string[]): Promise<void>;
-  deleteAppliance(appliance: string): Promise<void>;
-  updateAppliance(appliance: string, nickname: string, image: string): Promise<Appliance>;
-  fetchApplianceSignals(appliance: string): Promise<Signal[]>;
-  createApplianceSignal(appliance: string, message: InfraredSignal, image: string, name: string): Promise<Signal>;
-  reorderApplianceSignals(appliance: string, signals: string[]): Promise<void>;
+  findAirCon(message: InfraredSignal): AxiosPromise<ApplianceModelAndParam[]>;
+  updateAirConSettings(appliance: string, temperature?: string, operation_mode?: string, air_volume?: string, air_direction?: string, button?: string): AxiosPromise<void>;
+  fetchAppliances(): AxiosPromise<Appliance[]>;
+  createAppliance(device: string, nickname: string, image: string, model?: string): AxiosPromise<Appliance>;
+  reorderAppliances(appliances: string[]): AxiosPromise<void>;
+  deleteAppliance(appliance: string): AxiosPromise<void>;
+  updateAppliance(appliance: string, nickname: string, image: string): AxiosPromise<Appliance>;
+  fetchApplianceSignals(appliance: string): AxiosPromise<Signal[]>;
+  createApplianceSignal(appliance: string, message: InfraredSignal, image: string, name: string): AxiosPromise<Signal>;
+  reorderApplianceSignals(appliance: string, signals: string[]): AxiosPromise<void>;
 }
 
 export interface ISignals {
-  updateSignal(signal: string, image: string, name: string): Promise<void>;
-  deleteSignal(signal: string): Promise<void>;
-  sendSignal(signal: string): Promise<void>;
+  updateSignal(signal: string, image: string, name: string): AxiosPromise<void>;
+  deleteSignal(signal: string): AxiosPromise<void>;
+  sendSignal(signal: string): AxiosPromise<void>;
 }
 
 export class RemoClient implements IUsers, IDevices, IAppliances, ISignals {
@@ -61,12 +61,12 @@ export class RemoClient implements IUsers, IDevices, IAppliances, ISignals {
     this.httpClient = new AxiosWrapper(baseUrl, headers);
   }
 
-  fetchMe(): Promise<User> {
+  fetchMe(): AxiosPromise<User> {
     const api = '/users/me';
     return this.httpClient.get(api);
   }
 
-  updateMe(nickname: string): Promise<User> {
+  updateMe(nickname: string): AxiosPromise<User> {
     const api = '/users/me';
     const data = {
       nickname: nickname
@@ -74,12 +74,12 @@ export class RemoClient implements IUsers, IDevices, IAppliances, ISignals {
     return this.httpClient.post(api, qs.stringify(data));
   }
 
-  fetchDevices(): Promise<Device[]> {
+  fetchDevices(): AxiosPromise<Device[]> {
     const api = '/devices';
     return this.httpClient.get(api);
   }
 
-  updateRemo(device: string, name: string): Promise<void>  {
+  updateRemo(device: string, name: string): AxiosPromise<void>  {
     const api = `/devices/${device}`;
     const data = {
       name: name
@@ -87,12 +87,12 @@ export class RemoClient implements IUsers, IDevices, IAppliances, ISignals {
     return this.httpClient.post(api, qs.stringify(data));
   }
 
-  deleteRemo(device: string): Promise<void> {
+  deleteRemo(device: string): AxiosPromise<void> {
     const api = `/devices/${device}/delete`;
     return this.httpClient.post(api);
   }
 
-  updateTemperatureOffset(device: string, offset: number): Promise<void> {
+  updateTemperatureOffset(device: string, offset: number): AxiosPromise<void> {
     const api = `/devices/${device}/temperature_offset`
     const data = {
       offset: offset
@@ -100,7 +100,7 @@ export class RemoClient implements IUsers, IDevices, IAppliances, ISignals {
     return this.httpClient.post(api, qs.stringify(data));
   }
 
-  updateHumidityOffset(device: string, offset: number): Promise<void> {
+  updateHumidityOffset(device: string, offset: number): AxiosPromise<void> {
     const api = `/devices/${device}/humidity_offset`;
     const data = {
       offset: offset
@@ -108,7 +108,7 @@ export class RemoClient implements IUsers, IDevices, IAppliances, ISignals {
     return this.httpClient.post(api, qs.stringify(data));
   }
 
-  findAirCon(message: InfraredSignal): Promise<ApplianceModelAndParam[]> {
+  findAirCon(message: InfraredSignal): AxiosPromise<ApplianceModelAndParam[]> {
     const api = `/detectappliance`;
     const data = {
       message: JSON.stringify(message)
@@ -116,7 +116,7 @@ export class RemoClient implements IUsers, IDevices, IAppliances, ISignals {
     return this.httpClient.post(api, qs.stringify(data));
   }
 
-  updateAirConSettings(appliance: string, temperature?: string, operation_mode?: string, air_volume?: string, air_direction?: string, button?: string): Promise<void> {
+  updateAirConSettings(appliance: string, temperature?: string, operation_mode?: string, air_volume?: string, air_direction?: string, button?: string): AxiosPromise<void> {
     const api = `/appliances/${appliance}/aircon_settings`;
     const data = {
       temperature: temperature,
@@ -128,12 +128,12 @@ export class RemoClient implements IUsers, IDevices, IAppliances, ISignals {
     return this.httpClient.post(api, qs.stringify(data));
   }
 
-  fetchAppliances(): Promise<Appliance[]> {
+  fetchAppliances(): AxiosPromise<Appliance[]> {
     const api = `/appliances`;
     return this.httpClient.get(api);
   }
 
-  createAppliance(device: string, nickname: string, image: string, model?: string): Promise<Appliance> {
+  createAppliance(device: string, nickname: string, image: string, model?: string): AxiosPromise<Appliance> {
     const api = `/appliances`;
     const data = {
       device: device,
@@ -144,7 +144,7 @@ export class RemoClient implements IUsers, IDevices, IAppliances, ISignals {
     return this.httpClient.post(api, qs.stringify(data));
   }
 
-  reorderAppliances(appliances: string[]): Promise<void> {
+  reorderAppliances(appliances: string[]): AxiosPromise<void> {
     const api = `/appliance_orders`;
     const data = {
       appliances: appliances.join(',')
@@ -152,12 +152,12 @@ export class RemoClient implements IUsers, IDevices, IAppliances, ISignals {
     return this.httpClient.post(api, qs.stringify(data));
   }
 
-  deleteAppliance(appliance: string): Promise<void> {
+  deleteAppliance(appliance: string): AxiosPromise<void> {
     const api = `/appliances/${appliance}/delete`;
     return this.httpClient.post(api);
   }
 
-  updateAppliance(appliance: string, nickname: string, image: string): Promise<Appliance> {
+  updateAppliance(appliance: string, nickname: string, image: string): AxiosPromise<Appliance> {
     const api = `/appliances/${appliance}`;
     const data = {
       nickname: nickname,
@@ -166,12 +166,12 @@ export class RemoClient implements IUsers, IDevices, IAppliances, ISignals {
     return this.httpClient.post(api, qs.stringify(data));
   }
 
-  fetchApplianceSignals(appliance: string): Promise<Signal[]> {
+  fetchApplianceSignals(appliance: string): AxiosPromise<Signal[]> {
     const api = `/appliances/${appliance}/signals`;
     return this.httpClient.get(api);
   }
 
-  createApplianceSignal(appliance: string, message: InfraredSignal, image: string, name: string): Promise<Signal> {
+  createApplianceSignal(appliance: string, message: InfraredSignal, image: string, name: string): AxiosPromise<Signal> {
     const api = `/appliances/${appliance}/signals`;
     const data = {
       message: JSON.stringify(message),
@@ -181,7 +181,7 @@ export class RemoClient implements IUsers, IDevices, IAppliances, ISignals {
     return this.httpClient.post(api, qs.stringify(data));
   }
 
-  reorderApplianceSignals(appliance: string, signals: string[]): Promise<void> {
+  reorderApplianceSignals(appliance: string, signals: string[]): AxiosPromise<void> {
     const api = `/appliances/${appliance}/signal_orders`;
     const data = {
       signals: signals.join(',')
@@ -189,7 +189,7 @@ export class RemoClient implements IUsers, IDevices, IAppliances, ISignals {
     return this.httpClient.post(api, qs.stringify(data));
   }
 
-  updateSignal(signal: string, image: string, name: string): Promise<void> {
+  updateSignal(signal: string, image: string, name: string): AxiosPromise<void> {
     const api = `/signals/${signal}`;
     const data = {
       image: image,
@@ -198,12 +198,12 @@ export class RemoClient implements IUsers, IDevices, IAppliances, ISignals {
     return this.httpClient.post(api, qs.stringify(data));
   }
 
-  deleteSignal(signal: string): Promise<void> {
+  deleteSignal(signal: string): AxiosPromise<void> {
     const api = `/signals/${signal}/delete`;
     return this.httpClient.post(api);
   }
 
-  sendSignal(signal: string): Promise<void> {
+  sendSignal(signal: string): AxiosPromise<void> {
     const api = `/signals/${signal}/send`;
     return this.httpClient.post(api);
   }

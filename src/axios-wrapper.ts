@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { AxiosPromise } from 'axios';
+export { AxiosPromise } from 'axios';
 
 export class AxiosWrapper {
   constructor(baseUrl: string, headers: any) {
@@ -6,23 +8,11 @@ export class AxiosWrapper {
     axios.defaults.headers = headers;
   }
 
-  get<T>(api: string): Promise<T> {
-    return new Promise((resolve, reject) => {
-      axios.get<T>(api).then(res => {
-        resolve(res.data);
-      }).catch(err => {
-        reject(err);
-      });
-    });
+  get<T>(api: string): AxiosPromise<T> {
+    return axios.get<T>(api);
   }
 
-  post<T>(api: string, params?: any): Promise<T> {
-    return new Promise((resolve, reject) => {
-      axios.post<T>(api, params).then(res => {
-        resolve(res.data);
-      }).catch(err => {
-        reject(err);
-      });
-    });
+  post<T>(api: string, params?: any): AxiosPromise<T> {
+    return axios.post<T>(api, params);
   }
 }
