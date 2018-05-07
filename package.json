@@ -1,6 +1,6 @@
 {
   "name": "nremo-js",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Nature Remo API V1 Client",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
